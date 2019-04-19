@@ -1,11 +1,11 @@
 /**
- * scrollboard.js
+ * scrollboard
  * ACM竞赛滚榜展示插件，基于JQuery、Bootstrap
  *
- * Version 1.0.0
- * Author: qinshaoxuan qsxuan.com
- * Github: https://github.com/qinshaoxuan/ScrollBoard
- * Demo: https://qinshaoxuan.github.io/ScrollBoard/
+ * Version 1.0.1
+ * Author: Chaney丶
+ * Github: https://gitee.com/WITACM/ScrollBoard
+ * Demo: http://scrollboard.witchen.cn/
  * 
  */
 

@@ -1,15 +1,19 @@
-# ScrollBoard.js
+# ScrollBoard
+forked from [qinshaoxuan/ScrollBoard.js](https://github.com/qinshaoxuan/ScrollBoard.js)
 
 ACM竞赛滚榜展示插件，基于JQuery、Bootstrap
 
-展示页面：[Demo](https://qinshaoxuan.github.io/ScrollBoard.js/)
+展示页面：[Demo](http://scrollboard.witchen.cn/)
 
 按一次回车（可自行指定）可进行一步，即更新一个队的一个未知结果
-
 
 ### V 1.0.0 (2016-07-02)
 
 实现了基本的滚榜展示功能
+
+### V 1.0.1 (2019-04-19)
+
+基于HUSTOJ的OJ系统相关接口开发与修改，实现滚榜
 
 ## 使用方法
 
@@ -53,6 +57,8 @@ ACM竞赛滚榜展示插件，基于JQuery、Bootstrap
 
 ### 获取数据
 
+contest_log.php 为导出数据脚本。（本脚本主要适用于基于HUSTOJ二次开发的OJ）
+
+
 JS文件中的`getSubmitList()`和`getTeamList()`方法分别为获取提交数据和获取队伍数据，请根据后台JSON数据格式自行修改，代码内有详细的注释说明
 
-contest_log.php 为导出数据脚本。
