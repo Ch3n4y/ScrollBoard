@@ -43,22 +43,16 @@ function getSubmitList() {
     $.ajax({
         type: "GET",
         content: "application/x-www-form-urlencoded",
-        url: "data/12thSubmitData.json",
+        url: "data/data.json",
         dataType: "json",
         data: {},
         async: false,
         success: function(result) {
-            for (var i in result.data) {
-                var page = result.data[i];
-                for(var j in page.Status){
-                    var sub = page.Status[j];
-                    var ACode = 65;
-                    var startProblemId = 94;
-                    var alphabetId =String.fromCharCode(sub.pid-startProblemId+ACode);
-                    data.push(new Submit(sub.rid, sub.uname, alphabetId, StringToDate(sub.date), sub.status));
+            for (var key in result.submit) {
+                var sub = result.submit[key];
+                data.push(new Submit(sub.submitId, sub.teamId, sub.alphabetId, StringToDate(sub.subTime), sub.resultId));
+                // console.log(sub.submitId, sub.teamId, sub.alphabetId, StringToDate(sub.subTime), sub.submitId);
                 }
-            }
-
         },
         error: function() {
             alert("获取Submit数据失败");
@@ -66,8 +60,6 @@ function getSubmitList() {
     });
     return data;
 }
-
-
 
 
 /**
@@ -101,14 +93,15 @@ function getTeamList() {
     $.ajax({
         type: "GET",
         content: "application/x-www-form-urlencoded",
-        url: "data/12thTeamData.json",
+        url: "data/data.json",
         dataType: "json",
         async: false,
         data: {},
         success: function(result) {
-            for (var key in result.users) {
-                var team = result.users[key];
-                data[team.username] = new Team(team.username, team.nickname, null, 1);
+            for (var key in result.teamlist) {
+                var team = result.teamlist[key];
+                data[team.teamId] = new Team(team.teamId, team.teamName, team.teamMember, team.official);
+                // console.log(team.teamId, team.teamName, team.teamMember, 1);
             }
         },
         error: function() {
@@ -228,6 +221,7 @@ Team.prototype.init = function(startTime, freezeBoardTime) {
         p.submitCount++;
         //更新AC状态
         p.isAccepted = (sub.resultId == 0);
+        console.log( sub.resultId);
         //如果当前提交AC
         if (p.isAccepted) {
             //则保存AC时间
@@ -293,8 +287,8 @@ function TeamCompare(a, b) {
         return a.solved > b.solved ? -1 : 1;
     if (a.penalty != b.penalty) //第二关键字，罚时少者排位高
         return a.penalty < b.penalty ? -1 : 1;
-    //return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
-    return a.teamId.localeCompare(b.teamId);
+    return a.teamId < b.teamId ? -1 : 1; //第三关键字，队伍ID小者排位高
+    // return a.teamId.localeCompare(b.teamId);
 }
 
 
@@ -336,7 +330,7 @@ function Board(problemCount, medalCounts, startTime, freezeBoardTime) {
     //从服务器得到submitList和teamList
     this.submitList = getSubmitList();
     this.teamList = getTeamList();
-
+    console.log(this.submitList);
 
 
     //将submit存到对应的Team对象里
@@ -586,7 +580,7 @@ Board.prototype.updateTeamStatus = function(team) {
 
                 //得到TeamDiv距顶部的高度
                 var clientHeight = document.documentElement.clientHeight || document.body.clientHeight || 0;
-                var teamTopHeight = $team.offset().top - clientHeight + 100;
+                var teamTopHeight = $team.offset().top - clientHeight + 600;
 
 
                 //移动视点
